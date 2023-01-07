@@ -15,7 +15,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Yujan</a>
+        <a class="navbar-brand" href="/">Todo</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -46,58 +46,52 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                    Search
-                </button>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </nav>
 
+
     <div class="container">
-        <form>
+        <h1>Add a Todo</h1>
+        <form action="#" method="POST">
             <div class="form-group">
-                <label for="todotitle">Todo Title</label>
-                <input type="text" class="form-control" id="todotitle" aria-describedby="emailHelp">
+                <label for="title">Todo Title</label>
+                <input type="text" class="form-control" name="title" id="title">
             </div>
+            
             <div class="form-group">
-                <label for="tododescription">Todo Description</label>
-                <input type="" class="form-control" id="tododescription">
+                <label for="desc">Description</label>
+                <input type="text" class="form-control" name="desc" id="desc">
             </div>
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 
     <div class="container my-5">
-        <h2>Add Todo List</h2>
+        <h2>Your Todo List</h2>
         <table class="table table-light">
             <thead>
                 <tr>
                     <th scope="col">S.no.</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Created Time</th>
                 </tr>
             </thead>
             <tbody>
+                <!-- This is jinja 2 for loop to use database item in html -->
+                {% for todo in allTodo %}
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{todo.title}}</td>
+                    <td>{{todo.desc}}</td>
+                    <td>{{todo.date_created}}</td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                {% endfor %}
+
             </tbody>
         </table>
     </div>
