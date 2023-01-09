@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -31,10 +31,28 @@ def hello_world():
     allTodo = Todo.query.all() 
     return render_template("index.html",allTodo=allTodo)
 
-@app.route('/show')
-def products():
-    allTodo = Todo.query.all()
-    return "This is a products page"
+@app.route('/update/<int:sno>' , methods=['GET','POST'])
+def update(sno):
+    if request.method =="POST":
+        title =request.form['title']
+        desc =request.form['desc']
+        todo = Todo.query.filter_by(sno=sno).first()
+        todo.title = title
+        todo.desc = desc
+        db.session.add(todo)
+        db.session.commit()
+        return redirect('/')
+    
+    todo = Todo.query.filter_by(sno=sno).first()
+    return render_template('update.html',todo=todo)
+
+# Delete takes sno to delete the task
+@app.route('/delete/<int:sno>')
+def delete(sno):
+    todo = Todo.query.filter_by(sno=sno).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect('/')
 
 # for the app to run in debug mode in browser it runs
 if __name__ == "__main__":
